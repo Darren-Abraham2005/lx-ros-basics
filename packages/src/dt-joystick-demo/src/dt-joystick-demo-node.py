@@ -41,6 +41,28 @@ class DTJoystickDemoNode:
         ### the incoming joystick data contained in `msg`
 
         # Finally we publish the data
+        #v = msg.axes[1]
+        #w = msg.axes[3]
+        #cmd_to_publish.vel_right = v + w
+        #cmd_to_publish.vel_left = v - w
+        if msg.axes[1] == 1.0 and msg.axes[3] == 0.0:
+            cmd_to_publish.vel_left = 1.0
+            cmd_to_publish.vel_right = 1.0
+        elif msg.axes[1] == 1.0 and msg.axes[3] == 1.0:
+            cmd_to_publish.vel_left = -0.25
+            cmd_to_publish.vel_right = 1.0
+        elif msg.axes[1] == -1.0 and msg.axes[3] == 0.0:
+           cmd_to_publish.vel_left = -1.0
+           cmd_to_publish.vel_right = -1.0
+        elif msg.axes[1] == 1.0 and msg.axes[3] == -1.0:
+            cmd_to_publish.vel_left = 1.0
+            cmd_to_publish.vel_right = -0.25
+        elif msg.axes[3] == 1.0 and msg.axes[1] == 0.0:
+            cmd_to_publish.vel_left = 0.0
+            cmd_to_publish.vel_right = 1.0
+        elif msg.axes[3] == -1.0 and msg.axes[1] == 0.0:
+            cmd_to_publish.vel_left = 1.0
+            cmd_to_publish.vel_right = 0.0   
         self.pub_wheel_cmds.publish(cmd_to_publish)
 
 
